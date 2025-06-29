@@ -23,7 +23,8 @@ public class ExampleMod
     public static final String VERSION = "1.0";
 
     private static Logger logger;
-
+    // 修改"Open Menu"为按键显示名称，"Bound"为分类名称
+    // 修改Keyboard.KEY_C为你想要的按键
     public static KeyBinding menuKey = new KeyBinding("Open Menu", Keyboard.KEY_C, "Bound");
 
     @EventHandler
@@ -46,6 +47,7 @@ public class ExampleMod
     @SideOnly(Side.CLIENT)
     public void onKeyInput(ClientTickEvent event) {
         if (menuKey.isPressed()) {
+            // 你要执行的指令
             Minecraft.getMinecraft().player.sendChatMessage("/menu");
         }
     }

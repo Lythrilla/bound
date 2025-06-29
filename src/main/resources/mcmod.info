@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bound",
+  "name": "Bound",
+  "description": "Bound mod by lythrilla.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["lythrilla"],
+  "credits": "Created by lythrilla",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

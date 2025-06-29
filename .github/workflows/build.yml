@@ -1,11 +1,11 @@
-name: Build Mod
+name: 构建Mod
 
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-  workflow_dispatch: # 手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,16 +20,34 @@ jobs:
       with:
         java-version: '8'
         distribution: 'temurin'
+        
+    - name: 验证Gradle包装器
+      uses: gradle/wrapper-validation-action@v2
     
-    - name: 设置执行权限
+    - name: 设置Gradle缓存
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    
+    - name: 修改Gradle执行权限
       run: chmod +x ./gradlew
     
-    - name: Gradle构建
-      run: ./gradlew build
+    - name: 清理Gradle缓存
+      run: |
+        rm -f ~/.gradle/caches/modules-2/modules-2.lock
+        rm -f ~/.gradle/caches/modules-2/gc.properties
     
+    - name: 构建Mod
+      run: ./gradlew build --no-daemon
+      
     - name: 上传构建产物
       uses: actions/upload-artifact@v4
       with:
-        name: mod-jar
+        name: bound-mod
         path: build/libs/*.jar
         retention-days: 7
